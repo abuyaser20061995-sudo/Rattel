@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.rattel.app.data.local.RattelDatabase
 import com.rattel.app.data.local.dao.QuranDao
+import com.rattel.app.data.local.dao.NoteDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,10 +16,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
-    /**
-     * إنشاء قاعدة البيانات بناءً على ملف موجود مسبقاً في مجلد Assets
-     * (لأن المستخدم يجب أن يجد القرآن جاهزاً بدون إنترنت).
-     */
     @Provides
     @Singleton
     fun provideRattelDatabase(@ApplicationContext context: Context): RattelDatabase {
@@ -27,18 +24,20 @@ object DatabaseModule {
             RattelDatabase::class.java,
             "rattel_quran.db"
         )
-        // نسخ القاعدة المليئة بالبيانات من مجلد assets عند أول تشغيل
-        .createFromAsset("databases/quran_v1.db") 
+        // أوقفنا جلب الملف من assets مؤقتاً لتجنب انهيار التطبيق إذا لم تكن قد رفعت ملف البيانات بعد
         .fallbackToDestructiveMigration()
         .build()
     }
 
-    /**
-     * توفير الـ QuranDao ليستدعيه الـ Repository أو الـ ViewModel
-     */
     @Provides
     @Singleton
     fun provideQuranDao(database: RattelDatabase): QuranDao {
         return database.quranDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideNoteDao(database: RattelDatabase): NoteDao {
+        return database.noteDao()
     }
 }
