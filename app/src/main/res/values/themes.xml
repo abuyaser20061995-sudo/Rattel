@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Rattel" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- لون شريط الإشعارات العلوي (الأخضر الداكن) -->
+        <item name="android:statusBarColor">#1B4332</item>
+        <!-- لون شريط التنقل السفلي -->
+        <item name="android:navigationBarColor">#FFFFF0</item>
+    </style>
+</resources>
