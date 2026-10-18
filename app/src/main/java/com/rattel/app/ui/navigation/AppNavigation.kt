@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.rattel.app.ui.screens.home.HomeScreen
+//import com.rattel.app.ui.screens.home.HomeScreen
 import com.rattel.app.ui.screens.mushaf.MushafScreen
 import com.rattel.app.ui.screens.imam.ImamSuggestionScreen
 import com.rattel.app.ui.screens.tracking.VoiceTrackingScreen
@@ -35,8 +35,8 @@ fun AppNavigation() {
         
         // 1. الشاشة الرئيسية
         composable(route = Routes.HOME) {
-            HomeScreen(
-                onNavigateToMushaf = { page ->
+            // HomeScreen(
+               // onNavigateToMushaf = { page ->
                     // الانتقال إلى المصحف مع تحديد رقم الصفحة
                     navController.navigate("mushaf_screen/$page")
                 },
