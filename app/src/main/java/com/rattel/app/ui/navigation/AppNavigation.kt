@@ -35,9 +35,9 @@ fun AppNavigation() {
         
         // 1. الشاشة الرئيسية
         composable(route = Routes.HOME) {
-            // HomeScreen(
-               // onNavigateToMushaf = { page ->
-                    // الانتقال إلى المصحف مع تحديد رقم الصفحة
+            /* تعطيل الشاشة مؤقتا لتجاوز الخطأ
+            HomeScreen(
+                onNavigateToMushaf = { page ->
                     navController.navigate("mushaf_screen/$page")
                 },
                 onNavigateToImamSection = {
@@ -47,6 +47,7 @@ fun AppNavigation() {
                     navController.navigate(Routes.VOICE_TRACKING)
                 }
             )
+            */
         }
 
         // 2. شاشة المصحف (تحتاج لمعرفة رقم الصفحة المفتوحة)
