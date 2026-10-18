@@ -5,10 +5,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import org.vosk.Model
-import org.vosk.Recognizer
-import org.vosk.android.SpeechService
-import org.vosk.android.RecognitionListener
+//import org.vosk.Model
+//import org.vosk.Recognizer
+//import org.vosk.android.SpeechService
+//import org.vosk.android.RecognitionListener
 import javax.inject.Inject
 import javax.inject.Singleton
 
