@@ -47,7 +47,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-permissions:0.32.0")
  
     // مكتبات محرك الذكاء الاصطناعي الصوتي (Vosk)
-    implementation("net.java.dev.jna:jna:5.13.0@aar")
-    implementation("com.alphacep:vosk-android:0.3.32@aar")
+   // implementation("net.java.dev.jna:jna:5.13.0@aar")
+   // implementation("com.alphacep:vosk-android:0.3.32@aar")
 
 }
