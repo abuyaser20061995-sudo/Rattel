@@ -21,10 +21,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+    
     kotlinOptions {
-    jvmTarget = "17"
-    freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
-}
+        jvmTarget = "17"
+        freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+    }
+} // <--- هذا هو القوس الذي كان مفقوداً لإغلاق قسم android
 
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2023.10.01")
@@ -49,5 +51,4 @@ dependencies {
     // مكتبات محرك الذكاء الاصطناعي الصوتي (Vosk)
    // implementation("net.java.dev.jna:jna:5.13.0@aar")
    // implementation("com.alphacep:vosk-android:0.3.32@aar")
-
 }
