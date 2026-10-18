@@ -37,7 +37,7 @@ class ImamSuggestionUseCase @Inject constructor(
         }
 
         // جلب الآيات من المستودع (افتراض أن السورة تبدأ من الآية 1 في هذا المقطع)
-        val suggestedAyahs = repository.getAyahsForImam(
+        //val suggestedAyahs = repository.getAyahsForImam(
             surahId = selectedSurahId,
             startAyah = 1,
             limit = limit
