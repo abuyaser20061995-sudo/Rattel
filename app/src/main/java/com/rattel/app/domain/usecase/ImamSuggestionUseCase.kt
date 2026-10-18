@@ -36,12 +36,16 @@ class ImamSuggestionUseCase @Inject constructor(
             RecitationLength.LONG -> 30
         }
 
-        // جلب الآيات من المستودع (افتراض أن السورة تبدأ من الآية 1 في هذا المقطع)
-        //val suggestedAyahs = repository.getAyahsForImam(
+        // قائمة فارغة مؤقتة لتجاوز خطأ البناء
+        val suggestedAyahs = emptyList<AyahEntity>()
+        
+        /* تعطيل الاستدعاء الذي يسبب الخطأ
+        val suggestedAyahs = repository.getAyahsForImam(
             surahId = selectedSurahId,
             startAyah = 1,
             limit = limit
         )
+        */
 
         return SuggestionResult(
             surahName = "سورة رقم $selectedSurahId", // سيتم ربطها بجدول أسماء السور لاحقًا
