@@ -18,6 +18,7 @@ import androidx.navigation.navArgument
 import com.rattel.app.ui.screens.mushaf.MushafScreen
 import com.rattel.app.ui.screens.imam.ImamSuggestionScreen
 import com.rattel.app.ui.screens.tracking.VoiceTrackingScreen
+import com.rattel.app.ui.screens.home.HomeScreen
 
 object Routes {
     const val SPLASH = "splash_screen"
@@ -36,21 +37,20 @@ fun AppNavigation() {
         startDestination = Routes.HOME
     ) {
         
-        composable(route = Routes.HOME) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text("تطبيق رتّل يعمل بنجاح!")
-                Button(
-                    onClick = { navController.navigate(Routes.IMAM_SUGGESTION) },
-                    modifier = Modifier.padding(top = 16.dp)
-                ) {
-                    Text("فتح مساعد الإمام")
+                composable(route = Routes.HOME) {
+            HomeScreen(
+                onNavigateToMushaf = { page ->
+                    navController.navigate("mushaf_screen/$page")
+                },
+                onNavigateToImamSection = {
+                    navController.navigate(Routes.IMAM_SUGGESTION)
+                },
+                onNavigateToVoiceTracking = {
+                    navController.navigate(Routes.VOICE_TRACKING)
                 }
-            }
+            )
         }
+
 
         composable(
             route = Routes.MUSHAF,
