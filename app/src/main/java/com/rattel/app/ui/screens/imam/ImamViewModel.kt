@@ -15,32 +15,30 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ImamViewModel @Inject constructor(
-    private val suggestionUseCase: ImamSuggestionUseCase
+    private val imamSuggestionUseCase: ImamSuggestionUseCase
 ) : ViewModel() {
 
     private val _selectedPrayer = MutableStateFlow(PrayerType.FAJR)
     val selectedPrayer: StateFlow<PrayerType> = _selectedPrayer.asStateFlow()
 
-    private val _selectedLength = MutableStateFlow(RecitationLength.MEDIUM)
+    private val _selectedLength = MutableStateFlow(RecitationLength.SHORT)
     val selectedLength: StateFlow<RecitationLength> = _selectedLength.asStateFlow()
 
     private val _suggestion = MutableStateFlow<SuggestionResult?>(null)
     val suggestion: StateFlow<SuggestionResult?> = _suggestion.asStateFlow()
 
-    fun updatePrayer(prayer: PrayerType) {
+    fun setPrayer(prayer: PrayerType) {
         _selectedPrayer.value = prayer
     }
 
-    fun updateLength(length: RecitationLength) {
+    fun setLength(length: RecitationLength) {
         _selectedLength.value = length
     }
 
     fun generateSuggestion() {
         viewModelScope.launch {
-            val result = suggestionUseCase.getSuggestion(
-                prayer = _selectedPrayer.value,
-                length = _selectedLength.value
-            )
+            // استدعاء المنطق الخاص باقتراح السور
+            val result = imamSuggestionUseCase.getSuggestion(_selectedPrayer.value, _selectedLength.value)
             _suggestion.value = result
         }
     }
