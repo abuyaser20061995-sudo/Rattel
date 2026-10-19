@@ -1,8 +1,10 @@
 package com.rattel.app.core.audio
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class VoskVoiceRecognizer @Inject constructor(private val context: Context) {
-    // تم تفريغ الكلاس مؤقتاً لتجاوز خطأ مكتبة Vosk واستخراج التطبيق
+class VoskVoiceRecognizer @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
 }
