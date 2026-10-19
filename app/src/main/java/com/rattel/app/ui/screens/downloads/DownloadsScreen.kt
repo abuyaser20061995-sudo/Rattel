@@ -36,9 +36,3 @@ fun DownloadsScreen(
         }
     }
 }
-
-// أبقينا هذه الـ Data Class هنا في حال كانت مستخدمة في ملفات أخرى لتجنب الأخطاء المرجعية
-//data class DownloadedFile(
-   // val title: String,
-  //  val file: java.io.File
-)
