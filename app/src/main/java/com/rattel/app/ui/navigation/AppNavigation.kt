@@ -14,6 +14,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.navArgument
 import com.rattel.app.ui.screens.mushaf.MushafScreen
 import com.rattel.app.ui.screens.imam.ImamSuggestionScreen
@@ -63,12 +64,14 @@ fun AppNavigation() {
             )
         }
 
-        composable(route = Routes.IMAM_SUGGESTION) {
+                composable(route = Routes.IMAM_SUGGESTION) {
+            val imamViewModel: com.rattel.app.ui.screens.imam.ImamViewModel = hiltViewModel()
             ImamSuggestionScreen(
                 onBackClick = { navController.popBackStack() },
                 onNavigateToMushaf = { page ->
                     navController.navigate("mushaf_screen/$page")
-                }
+                },
+                viewModel = imamViewModel
             )
         }
 
