@@ -39,9 +39,9 @@ class DownloadsViewModel @Inject constructor(
             if (audioDirectory.exists()) {
                 val files = audioDirectory.listFiles()?.map { file ->
                     DownloadedFile(
-                        name = file.name,
-                        sizeInMb = file.length() / (1024.0 * 1024.0),
-                        file = file
+                        //name = file.name,
+                        //sizeInMb = file.length() / (1024.0 * 1024.0),
+                        //file = file
                     )
                 } ?: emptyList()
                 _downloadedFiles.value = files
