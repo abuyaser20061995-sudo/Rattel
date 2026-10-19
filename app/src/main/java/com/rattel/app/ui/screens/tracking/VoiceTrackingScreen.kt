@@ -5,15 +5,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VoiceTrackingScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    viewModel: VoiceTrackingViewModel = hiltViewModel()
 ) {
+    val isListening by viewModel.isListening.collectAsStateWithLifecycle()
+    val recognizedText by viewModel.recognizedText.collectAsStateWithLifecycle()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -26,22 +33,43 @@ fun VoiceTrackingScreen(
             )
         }
     ) { paddingValues ->
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
-            contentAlignment = Alignment.Center
+                .padding(paddingValues)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = "هذه الميزة قيد التطوير...",
-                    style = MaterialTheme.typography.titleLarge
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            ) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = recognizedText,
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Button(
+                onClick = { viewModel.toggleListening() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (isListening) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+            ) {
                 Text(
-                    text = "سيتم تفعيل الذكاء الاصطناعي قريباً",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = if (isListening) "إيقاف الاستماع" else "بدء التتبع الصوتي",
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
         }
