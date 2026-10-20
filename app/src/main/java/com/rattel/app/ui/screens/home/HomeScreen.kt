@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Book
-import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -21,7 +21,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,7 +47,7 @@ fun HomeScreen(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
             ) {
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Book, contentDescription = "المصحف") },
+                    icon = { Icon(Icons.Default.List, contentDescription = "المصحف") },
                     label = { Text("المصحف") },
                     selected = selectedBottomTab == 0,
                     onClick = { selectedBottomTab = 0 }
@@ -63,7 +62,7 @@ fun HomeScreen(
                     }
                 )
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.Mic, contentDescription = "التتبع الصوتي") },
+                    icon = { Icon(Icons.Default.PlayArrow, contentDescription = "التتبع الصوتي") },
                     label = { Text("التتبع الصوتي") },
                     selected = selectedBottomTab == 2,
                     onClick = { 
@@ -103,7 +102,7 @@ fun HomeScreen(
                         Text("سورة الفاتحة", color = Color.White, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
                         Text("الآية ١", color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.bodyMedium)
                     }
-                    Icon(Icons.Default.Book, contentDescription = null, tint = Color.White, modifier = Modifier.size(40.dp))
+                    Icon(Icons.Default.List, contentDescription = null, tint = Color.White, modifier = Modifier.size(40.dp))
                 }
             }
 
