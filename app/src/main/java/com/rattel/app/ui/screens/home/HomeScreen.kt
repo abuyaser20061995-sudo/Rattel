@@ -1,26 +1,19 @@
 package com.rattel.app.ui.screens.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,21 +27,22 @@ fun HomeScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("القرآن الكريم", fontWeight = FontWeight.Bold) },
-                colors = TopAppBarDefaults.topAppBarColors(
+            CenterAlignedTopAppBar(
+                title = { Text("القرآن الكريم", fontWeight = FontWeight.Bold, fontSize = 22.sp) },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface,
-                    titleContentColor = MaterialTheme.colorScheme.primary
+                    titleContentColor = MaterialTheme.colorScheme.onSurface
                 )
             )
         },
         bottomBar = {
             NavigationBar(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
+                containerColor = MaterialTheme.colorScheme.surface,
+                tonalElevation = 8.dp
             ) {
                 NavigationBarItem(
-                    icon = { Icon(Icons.Default.List, contentDescription = "المصحف") },
-                    label = { Text("المصحف") },
+                    icon = { Icon(Icons.Default.List, contentDescription = "الفهرس") },
+                    label = { Text("الفهرس") },
                     selected = selectedBottomTab == 0,
                     onClick = { selectedBottomTab = 0 }
                 )
@@ -56,107 +50,103 @@ fun HomeScreen(
                     icon = { Icon(Icons.Default.Person, contentDescription = "مساعد الإمام") },
                     label = { Text("مساعد الإمام") },
                     selected = selectedBottomTab == 1,
-                    onClick = { 
+                    onClick = {
                         selectedBottomTab = 1
-                        onNavigateToImamSection() 
+                        onNavigateToImamSection()
                     }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.PlayArrow, contentDescription = "التتبع الصوتي") },
                     label = { Text("التتبع الصوتي") },
                     selected = selectedBottomTab == 2,
-                    onClick = { 
+                    onClick = {
                         selectedBottomTab = 2
-                        onNavigateToVoiceTracking() 
+                        onNavigateToVoiceTracking()
                     }
                 )
             }
         }
     ) { paddingValues ->
-        
-        // محتوى الشاشة الرئيسية (فهرس السور)
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
-                .background(MaterialTheme.colorScheme.background)
+                .padding(paddingValues),
+            contentPadding = PaddingValues(bottom = 16.dp)
         ) {
-            // بطاقة المتابعة (آخر قراءة)
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .clickable { onNavigateToMushaf(1) },
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Row(
-                    modifier = Modifier.padding(20.dp).fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column {
-                        Text("متابعة القراءة", color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.labelMedium)
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text("سورة الفاتحة", color = Color.White, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                        Text("الآية ١", color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.bodyMedium)
-                    }
-                    Icon(Icons.Default.List, contentDescription = null, tint = Color.White, modifier = Modifier.size(40.dp))
-                }
-            }
-
-            Text(
-                text = "الفهرس",
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
+            // بيانات وهمية مؤقتة لمحاكاة شكل الفهرس الكلاسيكي
+            val surahs = listOf(
+                Triple("الفاتحة", "مكية • ٧ آيات", "١"),
+                Triple("البقرة", "مدنية • ٢٨٦ آية", "٢"),
+                Triple("آل عمران", "مدنية • ٢٠٠ آية", "٥٠"),
+                Triple("النساء", "مدنية • ١٧٦ آية", "٧٧"),
+                Triple("المائدة", "مدنية • ١٢٠ آية", "١٠٦")
             )
 
-            // قائمة السور (وهمية مؤقتاً للتصميم)
-            LazyColumn(
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                val surahs = listOf("الفاتحة", "البقرة", "آل عمران", "النساء", "المائدة")
-                items(surahs.size) { index ->
-                    SurahItem(
-                        number = index + 1,
-                        name = surahs[index],
-                        onClick = { onNavigateToMushaf(1) } // مؤقتاً تفتح الصفحة الأولى
-                    )
-                }
+            items(surahs.size) { index ->
+                val surah = surahs[index]
+                ClassicSurahItem(
+                    number = index + 1,
+                    name = surah.first,
+                    details = surah.second,
+                    page = surah.third,
+                    onClick = { onNavigateToMushaf(1) } // مؤقتاً تفتح الصفحة الأولى
+                )
+                // خط رفيع جداً للفصل بين السور كما في المصاحف الرسمية
+                HorizontalDivider(
+                    thickness = 0.5.dp,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                )
             }
         }
     }
 }
 
 @Composable
-fun SurahItem(number: Int, name: String, onClick: () -> Unit) {
+fun ClassicSurahItem(number: Int, name: String, details: String, page: String, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(MaterialTheme.colorScheme.surface)
             .clickable { onClick() }
-            .padding(16.dp),
+            .padding(horizontal = 20.dp, vertical = 18.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // رقم السورة
+        // مكان رقم السورة (لاحقاً نضع هنا الزخرفة الإسلامية)
         Box(
-            modifier = Modifier.size(40.dp).background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f), RoundedCornerShape(8.dp)),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.size(40.dp)
         ) {
-            Text(number.toString(), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+            Text(
+                text = number.toString(),
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
         }
-        
+
         Spacer(modifier = Modifier.width(16.dp))
-        
+
+        // اسم السورة وتفاصيلها
         Column(modifier = Modifier.weight(1f)) {
-            Text(name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-            Text("مكية • آياتها ...", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f))
+            Text(
+                text = "سورة $name",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = details,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
-        
-        Text("الاسم بالرسم العثماني", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary)
+
+        // رقم صفحة بداية السورة
+        Text(
+            text = page,
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }
