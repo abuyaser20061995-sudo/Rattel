@@ -92,7 +92,7 @@ fun HomeScreen(
                     onClick = { onNavigateToMushaf(1) } // مؤقتاً تفتح الصفحة الأولى
                 )
                 // خط رفيع جداً للفصل بين السور كما في المصاحف الرسمية
-                HorizontalDivider(
+                Divider(
                     thickness = 0.5.dp,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
                     modifier = Modifier.padding(horizontal = 16.dp)
