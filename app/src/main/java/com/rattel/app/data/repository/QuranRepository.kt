@@ -1,40 +1,20 @@
 package com.rattel.app.data.repository
 
-import com.rattel.app.data.local.dao.QuranDao
-import com.rattel.app.data.local.entities.AyahEntity
+import com.rattel.app.data.local.Ayah
+import com.rattel.app.data.local.QuranDao
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * المستودع (Repository) الخاص بالقرآن الكريم.
- * @Inject تعني أن Hilt سيقوم بتوفير QuranDao تلقائياً لهذا الكلاس.
- * @Singleton تعني أن هناك نسخة واحدة فقط من هذا المستودع في التطبيق كله لتقليل استهلاك الذاكرة.
- */
 @Singleton
 class QuranRepository @Inject constructor(
     private val quranDao: QuranDao
 ) {
-
-    /**
-     * جلب جميع الآيات لصفحة معينة.
-     * نستخدم Flow لكي يتم تحديث الشاشة تلقائياً إذا حدث أي تغيير.
-     */
-    fun getAyahsByPage(pageNumber: Int): Flow<List<AyahEntity>> {
-        return quranDao.getAyahsByPage(pageNumber)
+    fun getSurahAyahs(surahId: Int): Flow<List<Ayah>> {
+        return quranDao.getSurahAyahs(surahId)
     }
 
-    /**
-     * جلب آية محددة بالـ ID الخاص بها (يستخدم لعرض التفسير أو الإعراب).
-     */
-    suspend fun getAyahById(ayahId: Int): AyahEntity? {
-        return quranDao.getAyahById(ayahId)
-    }
-
-    /**
-     * البحث في المصحف.
-     */
-    fun searchQuran(query: String): Flow<List<AyahEntity>> {
-        return quranDao.searchQuran(query)
+    fun getPageAyahs(page: Int): Flow<List<Ayah>> {
+        return quranDao.getPageAyahs(page)
     }
 }
