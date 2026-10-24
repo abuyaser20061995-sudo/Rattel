@@ -2,9 +2,8 @@ package com.rattel.app.di
 
 import android.content.Context
 import androidx.room.Room
-import com.rattel.app.data.local.RattelDatabase
-import com.rattel.app.data.local.dao.QuranDao
-import com.rattel.app.data.local.dao.NoteDao
+import com.rattel.app.data.local.QuranDao
+import com.rattel.app.data.local.QuranDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,26 +17,21 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideRattelDatabase(@ApplicationContext context: Context): RattelDatabase {
+    fun provideQuranDatabase(@ApplicationContext context: Context): QuranDatabase {
         return Room.databaseBuilder(
             context,
-            RattelDatabase::class.java,
-            "rattel_quran.db"
+            QuranDatabase::class.java,
+            "quran_database.db"
         )
-        // أوقفنا جلب الملف من assets مؤقتاً لتجنب انهيار التطبيق إذا لم تكن قد رفعت ملف البيانات بعد
+        // هذا السطر مهم جداً: يسحب قاعدة البيانات الجاهزة من ملفات التطبيق
+        .createFromAsset("databases/quran.db") 
         .fallbackToDestructiveMigration()
         .build()
     }
 
     @Provides
     @Singleton
-    fun provideQuranDao(database: RattelDatabase): QuranDao {
+    fun provideQuranDao(database: QuranDatabase): QuranDao {
         return database.quranDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideNoteDao(database: RattelDatabase): NoteDao {
-        return database.noteDao()
     }
 }
